@@ -9,10 +9,14 @@ Adafruit_INA219 ina219;             // Cria uma instância do sensor de corrente
 #define NPN_PIN 9                   // Define o pino 9 como saída para controle PWM (transistor NPN)
 SimplePID voltagePID;              // Instância do controlador PID
 bool charging = true;              // Variável booleana para indicar se está carregando
+const int led = 8;  // Pino onde o LED está conectado
 
 void setup() {
 
   // Configuração básica
+  pinMode(led, OUTPUT);  // Define o pino como saída
+  digitalWrite(led, HIGH);  // Acende o LED
+  
   Serial.begin(115200);            // Inicializa a comunicação serial com velocidade de 115200 bps
   pinMode(A0,INPUT);               // Define o pino A0 como entrada (usado para medir a tensão de entrada)
 
@@ -25,6 +29,8 @@ void setup() {
 
   // Configuração do PID de controle de tensão
   voltagePID.setParams(0, 0.2e-3, 0, 0, 1); // Define os parâmetros do PID (Kp=0, Ki=0.0002, Kd=0, bias=0, Ts=1s)
+  
+
 }
 
 void loop() {
